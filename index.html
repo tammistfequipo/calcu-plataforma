@@ -1,63 +1,241 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Calculadora — Fichas, Sueldos y Punto de Equilibrio</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
-<style>
-:root{
---bg:#000; --card:#0c1117; --muted:#9fb3cc; --text:#eaf3ff;
---brand:#00e5ff; --accent:#00b3ff; --danger:#ff3b6b; --success:#2efea3;
---warn:#ffd166; --divider:rgba(255,255,255,.12); --radius:16px;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
-header{position:sticky;top:0;z-index:10;background:#06090f;border-bottom:1px solid var(--divider)}
-.wrap{max-width:1200px;margin:0 auto;padding:16px}
-h1{margin:0;font-size:clamp(22px,2.6vw,32px);font-weight:900;text-shadow:0 0 12px rgba(0,229,255,.5)}
-.grid{display:grid;gap:14px}
-@media(min-width:1100px){.cols{grid-template-columns:360px 1fr}}
-.card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid var(--divider);border-radius:var(--radius);padding:14px}
-.card h2{margin:.1rem 0 .6rem;font-size:18px;text-shadow:0 0 10px rgba(0,229,255,.4)}
-label{display:block;font-size:12px;color:var(--muted);margin:8px 0 4px}
-input,select{width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:#0a0f16;color:#fff;font-weight:600}
-input:focus,select:focus{outline:none;border-color:rgba(0,229,255,.6);box-shadow:0 0 0 3px rgba(0,229,255,.18)}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;border:1px solid var(--divider);background:linear-gradient(180deg,rgba(0,229,255,.26),rgba(0,179,255,.18));color:#fff;font-weight:800;cursor:pointer}
-.btn.ghost{background:transparent}
-.btn.danger{background:linear-gradient(180deg,rgba(255,59,107,.28),rgba(255,59,107,.18))}
-.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.kpi{border:1px solid var(--divider);border-radius:12px;padding:10px}
-.kpi .lbl{font-size:11px;color:var(--muted)}
-.kpi .val{font-size:20px;font-weight:900;margin-top:4px}
-table{width:100%;border-collapse:collapse}
-th,td{padding:10px 8px;border-bottom:1px solid var(--divider);font-size:13px}
-th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
-.tools{display:flex;flex-wrap:wrap;gap:6px}
-.muted{color:var(--muted)}
-.mono{font-variant-numeric:tabular-nums}
-.note{font-size:12px;color:var(--muted);margin-top:8px}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora — Fichas, Sueldos y Punto de Equilibrio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#000; --card:#0c1117; --muted:#9fb3cc; --text:#eaf3ff;
+      --brand:#00e5ff; --accent:#00b3ff; --danger:#ff3b6b; --success:#2efea3;
+      --warn:#ffd166; --divider:rgba(255,255,255,.12); --radius:16px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+    header{position:sticky;top:0;z-index:10;background:#06090f;border-bottom:1px solid var(--divider)}
+    .wrap{max-width:1200px;margin:0 auto;padding:16px}
+    h1{margin:0;font-size:clamp(22px,2.6vw,32px);font-weight:900;text-shadow:0 0 12px rgba(0,229,255,.5)}
+    .grid{display:grid;gap:14px}
+    @media(min-width:1100px){.cols{grid-template-columns:360px 1fr}}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid var(--divider);border-radius:var(--radius);padding:14px}
+    .card h2{margin:.1rem 0 .6rem;font-size:18px;text-shadow:0 0 10px rgba(0,229,255,.4)}
+    label{display:block;font-size:12px;color:var(--muted);margin:8px 0 4px}
+    input,select{width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:#0a0f16;color:#fff;font-weight:600}
+    input:focus,select:focus{outline:none;border-color:rgba(0,229,255,.6);box-shadow:0 0 0 3px rgba(0,229,255,.18)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;border:1px solid var(--divider);background:linear-gradient(180deg,rgba(0,229,255,.26),rgba(0,179,255,.18));color:#fff;font-weight:800;cursor:pointer}
+    .btn.ghost{background:transparent}
+    .btn.danger{background:linear-gradient(180deg,rgba(255,59,107,.28),rgba(255,59,107,.18))}
+    .kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+    .kpi{border:1px solid var(--divider);border-radius:12px;padding:10px}
+    .kpi .lbl{font-size:11px;color:var(--muted)}
+    .kpi .val{font-size:20px;font-weight:900;margin-top:4px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px 8px;border-bottom:1px solid var(--divider);font-size:13px}
+    th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+    .tools{display:flex;flex-wrap:wrap;gap:6px}
+    .muted{color:var(--muted)}
+    .mono{font-variant-numeric:tabular-nums}
+    .note{font-size:12px;color:var(--muted);margin-top:8px}
+  </style>
 </head>
 <body>
-<header>
-<div class="wrap">
-<h1>Calculadora — Fichas, Sueldos y Punto de Equilibrio</h1>
-<div class="muted" style="font-size:12px">Costo por ficha (19% / 21%), sueldos y objetivo diario para cubrir gastos y ganar.</div>
-</div>
-</header>
+  <header>
+    <div class="wrap">
+      <h1>Calculadora — Fichas, Sueldos y Punto de Equilibrio</h1>
+      <div class="muted" style="font-size:12px">Costo por ficha (19% / 21%), sueldos y objetivo diario para cubrir gastos y ganar.</div>
+    </div>
+  </header>
 
+  <main class="wrap grid cols">
+    <!-- Panel izquierdo: Parámetros -->
+    <section class="card">
+      <h2>Parámetros principales</h2>
+      <label>Precio de venta por ficha</label>
+      <input id="precioVenta" type="number" step="0.01" value="1">
 
-<main class="wrap grid cols">
-<!-- Panel izquierdo: Parámetros -->
-<section class="card">
-<h2>Parámetros principales</h2>
-<label>Precio de venta por ficha</label>
-<input id="precioVenta" type="number" step="0.01" value="1">
+      <div class="row">
+        <div>
+          <label>Costo al % (manual)</label>
+          <input id="costoPct" type="number" step="0.1" value="19">
+        </div>
+        <div>
+          <label>Atajos</label>
+          <div class="tools">
+            <button class="btn" data-pct="19">19%</button>
+            <button class="btn" data-pct="21">21%</button>
+          </div>
+        </div>
+      </div>
 
+      <div class="row">
+        <div>
+          <label>Cantidad a simular (fichas)</label>
+          <input id="cantidadFichas" type="number" step="1" value="1000">
+        </div>
+        <div>
+          <label>Días de venta por mes</label>
+          <input id="diasMes" type="number" step="1" value="30">
+        </div>
+      </div>
 
-<div class="row">
+      <div class="kpis" style="margin-top:8px">
+        <div class="kpi">
+          <div class="lbl">Costo por ficha</div>
+          <div class="val mono" id="kCostoFicha">—</div>
+        </div>
+        <div class="kpi">
+          <div class="lbl">Ganancia por ficha</div>
+          <div class="val mono" id="kGxFicha">—</div>
+        </div>
+        <div class="kpi">
+          <div class="lbl">Margen</div>
+          <div class="val mono" id="kMargen">—</div>
+        </div>
+      </div>
+
+      <div class="note">El costo por ficha = precio de venta × % costo (ej.: 19% ⇒ 0,19 × precio). Ganancia por ficha = venta − costo.</div>
+    </section>
+
+    <!-- Panel derecho: Sueldos / Fijos y resultados -->
+    <section class="card">
+      <h2>Sueldos y costos fijos mensuales</h2>
+      <div class="tools" style="margin-bottom:8px">
+        <button class="btn" id="addFijo">+ Agregar ítem</button>
+        <button class="btn ghost" id="resetFijos">Reiniciar</button>
+      </div>
+
+      <div style="overflow:auto;max-height:40vh;border:1px solid var(--divider);border-radius:10px">
+        <table>
+          <thead>
+            <tr>
+              <th>Concepto</th>
+              <th style="width:140px">Monto mensual</th>
+              <th style="width:60px"></th>
+            </tr>
+          </thead>
+          <tbody id="fijosBody"></tbody>
+        </table>
+      </div>
+
+      <div class="kpis" style="margin-top:10px">
+        <div class="kpi">
+          <div class="lbl">Total fijos mensuales</div>
+          <div class="val mono" id="kFijos">—</div>
+        </div>
+        <div class="kpi">
+          <div class="lbl">Fichas/día para cubrir fijos</div>
+          <div class="val mono" id="kFichasDiaBE">—</div>
+        </div>
+        <div class="kpi">
+          <div class="lbl">Venta $/día objetivo</div>
+          <div class="val mono" id="kVentaDia">—</div>
+        </div>
+      </div>
+
+      <div class="note">Punto de equilibrio diario = (Total fijos / días del mes) ÷ ganancia por ficha. Venta $/día = fichas/día × precio de venta.</div>
+
+      <h2 style="margin-top:14px">Simulación por cantidad</h2>
+      <div id="simOut" class="note">—</div>
+    </section>
+  </main>
+
+  <script>
+    // Helpers
+    const $ = (s, r=document)=>r.querySelector(s);
+    const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+    const money = n => new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS'}).format(n||0);
+
+    // Estado fijos en localStorage
+    const KEY='calc_fijos_v1';
+    let fijos = [];
+    function load(){
+      try{ fijos = JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){ fijos=[] }
+      if(!fijos.length){
+        fijos = [
+          {id:uid(), concepto:'Sueldo 1', monto: 350000},
+          {id:uid(), concepto:'Sueldo 2', monto: 300000},
+          {id:uid(), concepto:'Alquiler', monto: 180000},
+        ];
+      }
+      renderFijos();
+    }
+    function save(){ localStorage.setItem(KEY, JSON.stringify(fijos)); }
+    const uid = ()=> 'F'+Math.random().toString(36).slice(2,9);
+
+    // Render tabla fijos
+    function renderFijos(){
+      const tb = $('#fijosBody');
+      tb.innerHTML = '';
+      fijos.forEach(it=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><input class="concepto" value="${it.concepto}" style="width:100%;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:#0a0f16;color:#fff"></td>
+          <td><input class="monto" type="number" step="1000" value="${it.monto}" style="width:100%;padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:#0a0f16;color:#fff"></td>
+          <td><button class="btn danger del">Borrar</button></td>
+        `;
+        tr.querySelector('.concepto').addEventListener('input',e=>{ it.concepto = e.target.value; save(); calcAll();});
+        tr.querySelector('.monto').addEventListener('input',e=>{ it.monto = Number(e.target.value||0); save(); calcAll();});
+        tr.querySelector('.del').addEventListener('click',()=>{ fijos = fijos.filter(x=>x.id!==it.id); save(); renderFijos(); calcAll(); });
+        tb.appendChild(tr);
+      });
+      calcAll();
+    }
+
+    // Agregar/reset
+    $('#addFijo').addEventListener('click',()=>{ fijos.push({id:uid(), concepto:'Nuevo', monto:0}); save(); renderFijos();});
+    $('#resetFijos').addEventListener('click',()=>{ if(confirm('¿Reiniciar lista de fijos?')){ localStorage.removeItem(KEY); load(); }});
+
+    // Parámetros listeners
+    $$('#precioVenta, #costoPct, #cantidadFichas, #diasMes').forEach(el=> el.addEventListener('input', calcAll));
+    $$('.btn[data-pct]').forEach(b=> b.addEventListener('click',()=>{ $('#costoPct').value = b.getAttribute('data-pct'); calcAll(); }));
+
+    // Cálculo central
+    function calcAll(){
+      const pv = Number($('#precioVenta').value||0);
+      const pct = Number($('#costoPct').value||0)/100; // a proporción
+      const qty = Number($('#cantidadFichas').value||0);
+      const dias = Math.max(1, Number($('#diasMes').value||30));
+
+      const costoFicha = pv * pct;
+      const ganFicha = pv - costoFicha;
+      const margen = pv? (ganFicha/pv*100): 0;
+
+      $('#kCostoFicha').textContent = money(costoFicha);
+      $('#kGxFicha').textContent = money(ganFicha);
+      $('#kMargen').textContent = margen.toFixed(1)+"%";
+
+      const totalFijos = fijos.reduce((a,x)=> a + (Number(x.monto)||0), 0);
+      $('#kFijos').textContent = money(totalFijos);
+
+      // Punto de equilibrio diario
+      const fijosDia = totalFijos / dias;
+      const fichasDia = ganFicha>0 ? Math.ceil(fijosDia / ganFicha) : 0;
+      const ventaDia = fichasDia * pv;
+
+      $('#kFichasDiaBE').textContent = isFinite(fichasDia)? fichasDia.toString(): '—';
+      $('#kVentaDia').textContent = money(ventaDia);
+
+      // Simulación por cantidad
+      const costoTotal = costoFicha * qty;
+      const ventaTotal = pv * qty;
+      const ganTotal = ganFicha * qty;
+      $('#simOut').innerHTML = `
+        <div>Simulando <b>${qty.toLocaleString('es-AR')}</b> fichas @ ${money(pv)} (costo ${ (pct*100).toFixed(1)}%):</div>
+        <ul>
+          <li>Costo total: <b>${money(costoTotal)}</b></li>
+          <li>Venta total: <b>${money(ventaTotal)}</b></li>
+          <li>Ganancia total: <b>${money(ganTotal)}</b></li>
+        </ul>
+        <div class="muted">Tip: probá 19% y 21% con los botones para comparar.</div>`;
+    }
+
+    // Init
+    load();
+    calcAll();
+  </script>
+</body>
 </html>
